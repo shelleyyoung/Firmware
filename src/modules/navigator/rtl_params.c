@@ -122,10 +122,13 @@ PARAM_DEFINE_INT32(RTL_TYPE, 0);
  *
  * Defines the half-angle of the cone which defines the vehicle RTL behavior.
  *
- * @unit degrees
  * @min 0
- * @max 90
- * @increment 1
+ * @value 0 No cone, always climb to altitude of at least RTL_RETURN_ALT above home.
+ * @value 1 25 degrees cone half angle.
+ * @value 2 45 degrees cone half angle.
+ * @value 3 65 degrees cone half angle.
+ * @value 4 85 degrees cone half angle.
+ * @value 5 Return altitude at least RTL_DESCEND_ALT above home.
  * @group Return Mode
  */
-PARAM_DEFINE_INT32(RTL_CONE_ANG, 30);
+PARAM_DEFINE_INT32(RTL_CONE_SHAPE, 1);

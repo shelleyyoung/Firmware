@@ -67,8 +67,7 @@ RTL::rtl_type() const
 void
 RTL::on_activation()
 {
-
-	_rtl_alt = calculate_return_alt_from_cone_half_angle((float)_param_rtl_cone_half_angle_deg.get());
+	_rtl_alt = calculate_return_alt_from_cone_half_angle(get_rtl_cone_half_angle(_param_rtl_cone_shape.get()));
 
 	if (_navigator->get_land_detected()->landed) {
 		// For safety reasons don't go into RTL if landed.
@@ -349,7 +348,6 @@ RTL::advance_rtl()
 	}
 }
 
-
 float RTL::calculate_return_alt_from_cone_half_angle(float cone_half_angle_deg)
 {
 	const home_position_s &home = *_navigator->get_home_position();
@@ -389,4 +387,41 @@ float RTL::calculate_return_alt_from_cone_half_angle(float cone_half_angle_deg)
 	rtl_altitude = math::max(rtl_altitude, home.alt + _param_rtl_descend_alt.get());
 
 	return rtl_altitude;
+}
+
+float RTL::get_rtl_cone_half_angle(int param)
+{
+	float rtl_cone_half_angle_deg = 0;
+
+	switch (param) {
+	case RTLConeShape::CONE_HALF_ANGLE_0_DEGREES:
+		rtl_cone_half_angle_deg = 0.0f;
+		break;
+
+	case RTLConeShape::CONE_HALF_ANGLE_25_DEGREES:
+		rtl_cone_half_angle_deg = 25.0f;
+		break;
+
+	case RTLConeShape::CONE_HALF_ANGLE_45_DEGREES:
+		rtl_cone_half_angle_deg = 45.0f;
+		break;
+
+	case RTLConeShape::CONE_HALF_ANGLE_65_DEGREES:
+		rtl_cone_half_angle_deg = 65.0f;
+		break;
+
+	case RTLConeShape::CONE_HALF_ANGLE_80_DEGREES:
+		rtl_cone_half_angle_deg = 80.0f;
+		break;
+
+	case RTLConeShape::CONE_HALF_ANGLE_90_DEGREES:
+		rtl_cone_half_angle_deg = 90.0f;
+		break;
+
+	default:
+		rtl_cone_half_angle_deg = 0.0f;
+		break;
+	}
+
+	return rtl_cone_half_angle_deg;
 }
